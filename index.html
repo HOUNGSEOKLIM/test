@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>차계부 프로그램</title>
+    
+    <!-- Performance Optimizations: Resource Hints -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Optimized CSS Loading -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Optimized Font Loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"></noscript>
+</head>
+<body>
+    <!-- Loading State -->
+    <div id="loading" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>차계부를 불러오는 중...</p>
+    </div>
+
+    <div class="container" id="app" style="display: none;">
+        <header>
+            <h1>차계부 프로그램</h1>
+        </header>
+        
+        <!-- Summary Section -->
+        <section class="summary" role="region" aria-labelledby="summary-title">
+            <h3 id="summary-title">이번 달 총 비용: <span id="totalCost" aria-live="polite">0원</span></h3>
+        </section>
+
+        <!-- Records Section -->
+        <section class="record-list" role="region" aria-labelledby="records-title">
+            <h3 id="records-title">최근 운행 기록</h3>
+            
+            <!-- Search and Filter -->
+            <div class="search-controls">
+                <input type="text" id="searchInput" placeholder="기록 검색..." aria-label="운행 기록 검색">
+                <select id="sortSelect" aria-label="정렬 방식">
+                    <option value="date-desc">날짜 (최신순)</option>
+                    <option value="date-asc">날짜 (오래된순)</option>
+                    <option value="cost-desc">비용 (높은순)</option>
+                    <option value="cost-asc">비용 (낮은순)</option>
+                </select>
+            </div>
+            
+            <!-- Virtual Scrolling Container -->
+            <div id="recordsContainer" class="records-container" role="list">
+                <div id="records" aria-live="polite">아직 기록이 없습니다.</div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination" id="pagination" style="display: none;">
+                <button id="prevPage" aria-label="이전 페이지">‹</button>
+                <span id="pageInfo"></span>
+                <button id="nextPage" aria-label="다음 페이지">›</button>
+            </div>
+            
+            <!-- Export Controls -->
+            <div class="export-controls">
+                <button class="export-btn" id="exportBtn" disabled>
+                    <span class="btn-text">엑셀 파일로 내보내기</span>
+                    <span class="btn-loading" style="display: none;">내보내는 중...</span>
+                </button>
+                <button class="upload-btn" id="uploadBtn">
+                    <span class="btn-text">엑셀 파일 업로드</span>
+                </button>
+                <input type="file" id="uploadFile" accept=".xlsx, .xls" style="display: none;" aria-label="엑셀 파일 선택">
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="form-group" role="region" aria-labelledby="form-title">
+            <h3 id="form-title">새로운 운행 추가</h3>
+            <form id="recordForm" novalidate>
+                <div class="input-group">
+                    <label for="startPoint">출발지 *</label>
+                    <input type="text" id="startPoint" placeholder="예: 서울역" required aria-describedby="startPoint-error">
+                    <div id="startPoint-error" class="error-message" role="alert"></div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="endPoint">도착지 *</label>
+                    <input type="text" id="endPoint" placeholder="예: 수원역" required aria-describedby="endPoint-error">
+                    <div id="endPoint-error" class="error-message" role="alert"></div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="tollFee">통행료 (자동 계산)</label>
+                    <input type="number" id="tollFee" placeholder="자동 입력" value="0" readonly aria-describedby="tollFee-help">
+                    <div id="tollFee-help" class="help-text">하이패스 연동으로 자동 계산됩니다</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="fuelCost">주유비</label>
+                    <input type="number" id="fuelCost" placeholder="주유비 입력 (원)" value="0" min="0" step="100">
+                </div>
+                
+                <button type="submit" id="addRecordBtn" class="primary-btn">
+                    <span class="btn-text">운행 기록 저장</span>
+                    <span class="btn-loading" style="display: none;">저장 중...</span>
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Error Toast -->
+    <div id="errorToast" class="toast error-toast" role="alert" aria-live="assertive"></div>
+    
+    <!-- Success Toast -->
+    <div id="successToast" class="toast success-toast" role="alert" aria-live="polite"></div>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('SW registered: ', registration))
+                    .catch(registrationError => console.log('SW registration failed: ', registrationError));
+            });
+        }
+    </script>
+
+    <!-- Main Application Script -->
+    <script src="app.js" defer></script>
+</body>
+</html>

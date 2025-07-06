@@ -1,0 +1,70 @@
+{
+  "name": "차계부 프로그램",
+  "short_name": "차계부",
+  "description": "모바일 친화적인 차량 운행비 기록 및 관리 애플리케이션",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f5",
+  "theme_color": "#00796b",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "finance", "utilities"],
+  "lang": "ko-KR",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiMwMDc5NmIiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xOC45MiA2LjAxQzE4LjcyIDUuNDIgMTguMTYgNSAxNy41IDVIMTVWNEMxNSAyLjkgMTQuMSAyIDEzIDJIOUMzLjkgMiAzIDIuOSAzIDRWNUg0LjVDNS4xNiA1IDUuNzIgNS40MiA1LjkyIDYuMDFMNyAxMEgyVjEySDJWMjBDMiAyMS4xIDIuOSAyMiA0IDIySDhDOS4xIDIyIDEwIDIxLjEgMTAgMjBWMTJIMTJWMjBDMTIgMjEuMSAxMi45IDIyIDE0IDIySDIwQzIxLjEgMjIgMjIgMjEuMSAyMiAyMFYxMkgyMlYxMEgxNUwxNi4wOCA2LjAxSDE4LjkyWk01IDRIMTNWNUg1VjRaTTggMjBINC4wNUw0IDEySDhWMjBaTTEwIDEwSDlMOCA2LjUgN0g5SDEzSDEyTDEzIDYuNUwxMiAxMEgxMFpNMjAgMjBIMTZWMTJIMjBWMjBaIi8+Cjwvc3ZnPgo8L3N2Zz4K",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iNjQiIGZpbGw9IiMwMDc5NmIiLz4KPHN2ZyB4PSIxMjgiIHk9IjEyOCIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNMTguOTIgNi4wMUMxOC43MiA1LjQyIDE4LjE2IDUgMTcuNSA1SDE1VjRDMTUgMi45IDE0LjEgMiAxMyAySDlDOC45IDIgOCAyLjkgOCA0VjVINC41QzUuMTYgNSA1LjcyIDUuNDIgNS45MiA2LjAxTDcgMTBIMlYxMkgyVjIwQzIgMjEuMSAyLjkgMjIgNCAyMkg4QzkuMSAyMiAxMCAyMS4xIDEwIDIwVjEySDEyVjIwQzEyIDIxLjEgMTIuOSAyMiAxNCAyMkgyMEMyMS4xIDIyIDIyIDIxLjEgMjIgMjBWMTJIMjJWMTBIMTVMMTYuMDggNi4wMUgxOC45MlpNNSA0SDEzVjVINVY0Wk04IDIwSDQuMDVMNCAxMkg4VjIwWk0xMCAxMEg5TDggNi41IDdIOUgxM0gxMkwxMyA2LjVMMTIgMTBIMTBaTTIwIDIwSDE2VjEySDIwVjIwWiIvPgo8L3N2Zz4KPC9zdmc+Cg==",
+      "sizes": "512x512", 
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjY0MCIgdmlld0JveD0iMCAwIDMyMCA2NDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMjAiIGhlaWdodD0iNjQwIiBmaWxsPSIjZjVmNWY1Ii8+CjxyZWN0IHg9IjE2IiB5PSIzMiIgd2lkdGg9IjI4OCIgaGVpZ2h0PSI1NzYiIHJ4PSI4IiBmaWxsPSJ3aGl0ZSIvPgo8dGV4dCB4PSIxNjAiIHk9IjgwIiBmaWxsPSIjMzMzIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+7LCo6rOE67aAIO2UhOuhnuq3uOuwoCDrqqjrsJzdgCDtmZTuqZQ8L3RleHQ+Cjx0ZXh0IHg9IjE2MCIgeT0iMTIwIiBmaWxsPSIjNjY2IiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7snbTrsoEg64usIOyNnSDruYTsmqk6IDE1NywyMDDsm5M8L3RleHQ+CjwvdGV4dD4KPC9zdmc+Cg==",
+      "sizes": "320x640",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "새 기록 추가",
+      "short_name": "기록 추가",
+      "description": "새로운 운행 기록을 빠르게 추가합니다",
+      "url": "/#add-record",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyUzYuNDggMjIgMTIgMjJTMjIgMTcuNTIgMjIgMTJTMTcuNTIgMiAxMiAyWk0xNyAxM0gxM1YxN0gxMVYxM0g3VjExSDExVjdIMTNWMTFIMTdWMTNaIiBmaWxsPSIjMDA3OTZiIi8+Cjwvc3ZnPgo=",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "기록 보기",
+      "short_name": "기록",
+      "description": "저장된 운행 기록을 확인합니다", 
+      "url": "/#records",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgMTNIMTFWMTFIM1YxM1pNMyAxN0gxMVYxNUgzVjE3Wk0zIDlIMTFWN0gzVjlaIiBmaWxsPSIjMDA3OTZiIi8+CjxwYXRoIGQ9Ik0xNiA3VjlIMTkuNVYxMUgxNlYxM0gxOC41VjE1SDE2VjE3SDE5LjVWMTlIMTZWMjFIMjFWNUgxNloiIGZpbGw9IiMwMDc5NmIiLz4KPC9zdmc+Cg==",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "scope": "/",
+  "id": "car-expense-tracker",
+  "dir": "ltr",
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
+}
