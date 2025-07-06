@@ -1,320 +1,211 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>차계부 프로그램</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 15px;
-            background-color: #f5f5f5;
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
-        }
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            font-size: 1.5em;
-            margin-top: 0;
-        }
-        .summary {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #e0f7fa;
-            border-radius: 5px;
-        }
-        .summary h3 {
-            margin: 0;
-            font-size: 1.2em;
-        }
-        .record-list {
-            margin-bottom: 15px;
-        }
-        .record-list h3 {
-            font-size: 1.2em;
-            margin-top: 0;
-        }
-        .record-item {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-            font-size: 0.9em;
-            word-break: break-word; /* 긴 텍스트 줄바꿈 */
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 1em;
-        }
-        input, button {
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            font-size: 1em;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            background-color: #00796b;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-            height: 45px; /* 터치 영역 확대 */
-        }
-        button:hover {
-            background-color: #004d40;
-        }
-        .export-btn {
-            background-color: #388e3c;
-        }
-        .export-btn:hover {
-            background-color: #2e7d32;
-        }
-        .upload-btn {
-            background-color: #1976d2;
-        }
-        .upload-btn:hover {
-            background-color: #1565c0;
-        }
-        /* 모바일 반응형 스타일 */
-        @media screen and (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 10px;
-            }
-            h1 {
-                font-size: 1.3em;
-            }
-            .summary h3 {
-                font-size: 1.1em;
-            }
-            .record-list h3 {
-                font-size: 1.1em;
-            }
-            .record-item {
-                font-size: 0.85em;
-                padding: 6px;
-            }
-            input, button {
-                padding: 8px;
-                font-size: 0.9em;
-            }
-            button {
-                height: 40px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>차계부 프로그램</h1>
-        
-        <!-- 요약 정보 -->
-        <div class="summary">
-            <h3>이번 달 총 비용: <span id="totalCost">0원</span></h3>
-        </div>
+# Android 태블릿 원격 제어기
 
-        <!-- 운행 기록 리스트 -->
-        <div class="record-list">
-            <h3>최근 운행 기록</h3>
-            <div id="records">아직 기록이 없습니다.</div>
-            <button class="export-btn" onclick="exportToExcel()">엑셀 파일로 내보내기</button>
-            <button class="upload-btn" onclick="document.getElementById('uploadFile').click()">엑셀 파일 업로드</button>
-            <input type="file" id="uploadFile" accept=".xlsx, .xls" style="display: none;" onchange="uploadExcel(this)">
-        </div>
+Windows PC에서 같은 네트워크의 여러 Android 태블릿을 원격으로 제어할 수 있는 프로그램입니다.
 
-        <!-- 새로운 운행 추가 폼 -->
-        <div class="form-group">
-            <h3>새로운 운행 추가</h3>
-            <label for="startPoint">출발지</label>
-            <input type="text" id="startPoint" placeholder="예: 서울역">
-            
-            <label for="endPoint">도착지</label>
-            <input type="text" id="endPoint" placeholder="예: 수원역">
-            
-            <label for="tollFee">통행료 (하이패스 자동 입력)</label>
-            <input type="number" id="tollFee" placeholder="자동 입력" value="0" readonly>
-            
-            <label for="fuelCost">주유비 (직접 입력)</label>
-            <input type="number" id="fuelCost" placeholder="주유비 입력 (원)" value="0">
-            
-            <button onclick="addRecord()">운행 기록 저장</button>
-        </div>
-    </div>
+## 주요 기능
 
-    <!-- SheetJS 라이브러리 CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script>
-        let totalCost = 0;
-        let recordList = [];
+- 🔌 **무선 연결**: Wi-Fi를 통한 Android 태블릿 무선 제어
+- 🖥️ **다중 기기 지원**: 여러 태블릿을 동시에 관리
+- ⚡ **전원 제어**: 화면 켜기/끄기, 재부팅, 절전모드
+- 🎮 **기본 제어**: 홈, 뒤로가기, 메뉴 버튼
+- 📝 **사용자 명령**: 커스텀 ADB 명령 실행
+- 💾 **설정 저장**: 태블릿 목록 자동 저장/로드
+- 📊 **실시간 로그**: 모든 작업 내역 추적
 
-        function addRecord() {
-            const startPoint = document.getElementById('startPoint').value;
-            const endPoint = document.getElementById('endPoint').value;
-            const tollFee = simulateTollFee(); // 하이패스 모의 데이터
-            const fuelCost = parseInt(document.getElementById('fuelCost').value) || 0;
+## 시스템 요구사항
 
-            if (startPoint && endPoint) {
-                const total = tollFee + fuelCost;
-                totalCost += total;
-                document.getElementById('totalCost').textContent = totalCost.toLocaleString() + '원';
+- **운영체제**: Windows 10/11
+- **Python**: 3.7 이상
+- **네트워크**: 태블릿과 같은 Wi-Fi 네트워크
+- **ADB**: Android Debug Bridge (자동 설치 지원)
 
-                const record = {
-                    date: new Date().toLocaleDateString('ko-KR'),
-                    route: `${startPoint} → ${endPoint}`,
-                    toll: tollFee,
-                    fuel: fuelCost,
-                    total: total
-                };
-                recordList.push(record);
-                updateRecordList();
+## 설치 및 설정
 
-                // 입력 필드 초기화
-                document.getElementById('startPoint').value = '';
-                document.getElementById('endPoint').value = '';
-                document.getElementById('fuelCost').value = '0';
-                document.getElementById('tollFee').value = tollFee;
-            } else {
-                alert('출발지와 도착지를 입력해주세요.');
-            }
-        }
+### 1. 프로젝트 다운로드
 
-        function simulateTollFee() {
-            // 하이패스 연동 대신 랜덤 통행료 모의 데이터 생성
-            return Math.floor(Math.random() * 5000) + 1000;
-        }
+```bash
+git clone <repository-url>
+cd android-tablet-controller
+```
 
-        function simulateTmapHistory(days = 5) {
-            // 티맵 API 연동 대신 모의 데이터 생성 (지난 n일간의 이동 경로)
-            const history = [];
-            const places = ['서울역', '수원역', '인천', '부산', '대전', '광주'];
-            for (let i = 0; i < days; i++) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                const start = places[Math.floor(Math.random() * places.length)];
-                let end = places[Math.floor(Math.random() * places.length)];
-                while (start === end) {
-                    end = places[Math.floor(Math.random() * places.length)];
-                }
-                const tollFee = simulateTollFee();
-                const fuelCost = Math.floor(Math.random() * 50000);
-                history.push({
-                    date: date.toLocaleDateString('ko-KR'),
-                    route: `${start} → ${end}`,
-                    toll: tollFee,
-                    fuel: fuelCost,
-                    total: tollFee + fuelCost
-                });
-            }
-            return history;
-        }
+### 2. Python 패키지 설치
 
-        function updateRecordList() {
-            const recordsDiv = document.getElementById('records');
-            recordsDiv.innerHTML = '';
-            if (recordList.length === 0) {
-                recordsDiv.innerHTML = '아직 기록이 없습니다.';
-                return;
-            }
+```bash
+pip install -r requirements.txt
+```
 
-            recordList.forEach(record => {
-                const recordItem = document.createElement('div');
-                recordItem.className = 'record-item';
-                recordItem.textContent = `${record.date} | ${record.route} | 통행료: ${record.toll.toLocaleString()}원 | 주유비: ${record.fuel.toLocaleString()}원 | 총 비용: ${record.total.toLocaleString()}원`;
-                recordsDiv.appendChild(recordItem);
-            });
-        }
+### 3. ADB 설정 (자동)
 
-        function exportToExcel() {
-            if (recordList.length === 0) {
-                alert('내보낼 운행 기록이 없습니다. 티맵 데이터를 불러오거나 기록을 추가해주세요.');
-                return;
-            }
+```bash
+python setup_adb.py
+```
 
-            // 엑셀 데이터 준비
-            const data = recordList.map(record => ({
-                날짜: record.date,
-                경로: record.route,
-                통행료: record.toll,
-                주유비: record.fuel,
-                총비용: record.total
-            }));
+또는 수동으로 [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools)를 다운로드하여 PATH에 추가하세요.
 
-            // 워크시트 생성
-            const ws = XLSX.utils.json_to_sheet(data);
-            // 워크북 생성
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "차계부_기록");
-            // 파일 다운로드
-            XLSX.writeFile(wb, "차계부_기록.xlsx");
-        }
+## Android 태블릿 설정
 
-        function uploadExcel(input) {
-            const file = input.files[0];
-            if (!file) {
-                alert('파일을 선택해주세요.');
-                return;
-            }
+### 1. 개발자 옵션 활성화
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const firstSheet = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheet];
-                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+1. **설정** → **디바이스 정보** (또는 **태블릿 정보**)
+2. **빌드 번호**를 7번 연속 터치
+3. "개발자가 되었습니다" 메시지 확인
 
-                // 업로드된 데이터 처리
-                if (jsonData.length > 0) {
-                    jsonData.forEach(row => {
-                        const record = {
-                            date: row['날짜'] || new Date().toLocaleDateString('ko-KR'),
-                            route: row['경로'] || '알 수 없음',
-                            toll: parseInt(row['통행료']) || 0,
-                            fuel: parseInt(row['주유비']) || 0,
-                            total: (parseInt(row['통행료']) || 0) + (parseInt(row['주유비']) || 0)
-                        };
-                        recordList.push(record);
-                        totalCost += record.total;
-                    });
-                    document.getElementById('totalCost').textContent = totalCost.toLocaleString() + '원';
-                    updateRecordList();
-                    alert(`${jsonData.length}개의 기록이 업로드되었습니다.`);
-                } else {
-                    alert('업로드된 파일에 데이터가 없습니다.');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        }
+### 2. USB 디버깅 활성화
 
-        // 티맵 API 모의 데이터로 기록 추가 (테스트용)
-        window.onload = function() {
-            // 페이지 로드 시 티맵 API로 지난 5일간 데이터 가져오기 (모의)
-            const tmapHistory = simulateTmapHistory(5);
-            tmapHistory.forEach(record => {
-                recordList.push(record);
-                totalCost += record.total;
-            });
-            document.getElementById('totalCost').textContent = totalCost.toLocaleString() + '원';
-            updateRecordList();
-        };
-    </script>
-</body>
-</html>
+1. **설정** → **개발자 옵션**
+2. **USB 디버깅** 활성화
+3. **무선 디버깅** 활성화 (Android 11 이상)
+
+### 3. 무선 디버깅 설정
+
+#### Android 11 이상:
+1. **설정** → **개발자 옵션** → **무선 디버깅**
+2. **페어링 코드로 기기 페어링** 선택
+3. 페어링 코드와 IP:포트 정보 확인
+
+#### Android 10 이하:
+1. USB 케이블로 PC와 연결
+2. 명령 프롬프트에서 실행:
+   ```bash
+   adb tcpip 5555
+   adb connect [태블릿IP]:5555
+   ```
+
+### 4. IP 주소 확인
+
+1. **설정** → **Wi-Fi** → 연결된 네트워크 선택
+2. IP 주소 확인 (예: 192.168.1.100)
+
+## 사용법
+
+### 1. 프로그램 실행
+
+```bash
+python android_tablet_controller.py
+```
+
+또는 배치 파일 실행:
+```bash
+run_controller.bat
+```
+
+### 2. 태블릿 추가
+
+1. **IP 주소**: 태블릿의 IP 주소 입력 (예: 192.168.1.100)
+2. **포트**: 무선 디버깅 포트 입력 (기본값: 5555)
+3. **이름**: 태블릿 식별용 이름 입력
+4. **태블릿 추가** 버튼 클릭
+
+### 3. 연결 및 제어
+
+1. **연결**: 추가한 태블릿 선택 후 **연결** 버튼
+2. **상태 확인**: 모든 태블릿의 연결 상태 확인
+3. **제어 명령**: 다양한 제어 버튼 사용
+
+## 제어 기능
+
+### 연결 관리
+- **연결**: 선택한 태블릿에 연결
+- **연결 해제**: 선택한 태블릿 연결 해제
+- **모두 연결**: 모든 태블릿에 연결 시도
+- **상태 확인**: 연결 상태 업데이트
+
+### 전원 제어
+- **화면 켜기**: 태블릿 화면 활성화
+- **화면 끄기**: 태블릿 화면 비활성화
+- **재부팅**: 태블릿 재시작
+- **절전모드**: 태블릿을 절전 상태로 전환
+
+### 기본 제어
+- **홈 버튼**: 홈 화면으로 이동
+- **뒤로 가기**: 이전 화면으로 이동
+- **메뉴**: 메뉴 버튼 동작
+- **사용자 명령**: 커스텀 ADB 명령 실행
+
+## 문제 해결
+
+### 연결 문제
+
+1. **태블릿과 PC가 같은 Wi-Fi에 연결되었는지 확인**
+2. **방화벽에서 ADB 포트(5555) 허용 확인**
+3. **태블릿에서 USB 디버깅이 활성화되었는지 확인**
+
+### ADB 문제
+
+```bash
+# ADB 서버 재시작
+adb kill-server
+adb start-server
+
+# 연결된 기기 확인
+adb devices
+```
+
+### 권한 문제
+
+- 태블릿에서 "USB 디버깅 허용" 다이얼로그가 나타나면 **항상 허용** 선택
+- 일부 명령은 root 권한이 필요할 수 있습니다
+
+## 고급 사용법
+
+### 사용자 정의 명령
+
+ADB shell 명령을 직접 실행할 수 있습니다:
+
+```bash
+# 화면 캡처
+screencap /sdcard/screenshot.png
+
+# 앱 실행
+am start -n com.android.settings/.Settings
+
+# 키 입력
+input keyevent KEYCODE_VOLUME_UP
+
+# 텍스트 입력
+input text "Hello World"
+
+# 화면 터치
+input tap 500 1000
+```
+
+### 배치 스크립트 사용
+
+복잡한 작업을 위해 여러 명령을 순차 실행할 수 있습니다.
+
+## 파일 구조
+
+```
+android-tablet-controller/
+├── android_tablet_controller.py  # 메인 프로그램
+├── setup_adb.py                 # ADB 설치 스크립트
+├── requirements.txt              # Python 패키지 목록
+├── tablet_config.json           # 태블릿 설정 (자동 생성)
+├── run_controller.bat           # Windows 실행 배치 파일
+└── README.md                    # 사용 설명서
+```
+
+## 주의사항
+
+⚠️ **보안 주의사항**
+- USB 디버깅은 보안 위험을 증가시킬 수 있습니다
+- 신뢰할 수 있는 네트워크에서만 사용하세요
+- 사용 후 무선 디버깅을 비활성화하는 것을 권장합니다
+
+⚠️ **사용 제한**
+- 일부 제조사에서는 무선 디버깅을 제한할 수 있습니다
+- Root 권한이 필요한 기능은 제한될 수 있습니다
+- 태블릿의 절전 설정에 따라 연결이 끊어질 수 있습니다
+
+## 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 배포됩니다.
+
+## 기여
+
+버그 리포트나 기능 제안은 Issues를 통해 제출해 주세요.
+
+## 지원
+
+- **이메일**: [이메일 주소]
+- **GitHub Issues**: [저장소 URL]/issues
